@@ -1,12 +1,15 @@
 import { Request, Response } from 'express'
+import prisma from '../utils/db'
 
-export const getProducts = (req: Request, res: Response): void => {
-	const products = [
-		{ id: 1, name: 'Canvas Jacket', price: 120 },
-		{ id: 2, name: 'Work Pants', price: 80 },
-		{ id: 3, name: 'Utility Vest', price: 95 },
-	]
-
-	res.json(products)
+export const getProducts = async (
+	req: Request,
+	res: Response
+): Promise<void> => {
+	try {
+		const products = await prisma.product.findMany()
+		res.json(products)
+	} catch (error) {
+		console.error('Error fetching products:', error)
+		res.status(500).json({ error: 'Failed to fetch products' })
+	}
 }
- 
