@@ -9,3 +9,4 @@ export const getProducts = (req: Request, res: Response): void => {
 
 	res.json(products)
 }
+ 
